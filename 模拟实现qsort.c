@@ -1,12 +1,12 @@
 #include<stdio.h>
 #include<windows.h>
 
-int int_cmp(const void *p1, const void *p2)  //比较p1和p2的指向的大小
+int int_cmp(const void *p1, const void *p2) 
 {
 	return (*(int *)p1 > *(int *)p2);
 }
 
-void _swap(void *p1, void *p2, int size)  //交换
+void _swap(void *p1, void *p2, int size)  
 {
 	int i = 0;
 	for (i = 0; i < size; i++){
@@ -16,7 +16,7 @@ void _swap(void *p1, void *p2, int size)  //交换
 	}
 }
 
-void bubble(void *base, int count, int size, int(*cmp)(void *, void *))  //冒泡法实现数组的排序
+void bubble(void *base, int count, int size, int(*cmp)(void *, void *))  
 {
 	int i = 0;
 	int j = 0;
