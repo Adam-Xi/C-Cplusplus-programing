@@ -23,7 +23,7 @@ void bubble(void *base, int count, int size, int(*cmp)(void *, void *))
 	for (i = 0; i < count - 1; i++){
 		for (j = 0; j < count - i - 1; j++){
 			if (cmp((char *)base + j * size, (char *)base + (j + 1) * size) > 0){
-				_swap((char *)base + j * size, (char *)base + (j + 1) * size, size);  //ÖðµØÖ·ÍÆ½ø 
+				_swap((char *)base + j * size, (char *)base + (j + 1) * size, size);  
 			}
 		}
 	}
