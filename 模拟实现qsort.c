@@ -5,7 +5,6 @@ int int_cmp(const void *p1, const void *p2)
 {
 	return (*(int *)p1 > *(int *)p2);
 }
-
 void _swap(void *p1, void *p2, int size)  
 {
 	int i = 0;
@@ -15,7 +14,6 @@ void _swap(void *p1, void *p2, int size)
 		*((char *)p2 + i) = tmp;
 	}
 }
-
 void bubble(void *base, int count, int size, int(*cmp)(void *, void *))  
 {
 	int i = 0;
@@ -28,7 +26,6 @@ void bubble(void *base, int count, int size, int(*cmp)(void *, void *))
 		}
 	}
 }
-
 int main()
 {
 	int arr[] = { 1, 3, 5, 7, 9, 2, 4, 6, 8, 0 };
