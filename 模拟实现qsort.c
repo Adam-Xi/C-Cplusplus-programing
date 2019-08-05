@@ -1,5 +1,4 @@
 #include<stdio.h>
-#include<windows.h>
 
 int int_cmp(const void *p1, const void *p2) 
 {
@@ -36,6 +35,5 @@ int main()
 	}
 	printf("\n");
 	
-	system("pause");
 	return 0;
 }
