@@ -17,7 +17,7 @@ void YoungMatrix(int arr[][5], int *px, int *py, int key)
 			y--;
 		}
 	}
-	*px = -1; //函数若没有在前面跳出，则此处将x，y都置为-1，表示没有查询到
+	*px = -1;
 	*py = -1;
 }
 
