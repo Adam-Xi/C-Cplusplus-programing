@@ -1,5 +1,4 @@
 #include<stdio.h>
-#include<Windows.h>
 
 void YoungMatrix(int arr[][5], int *px, int *py, int key)
 {
@@ -41,7 +40,6 @@ int main()
 		printf("No found!\n");
 	}
 
-	system("pause");
 	return 0;
 
 }
