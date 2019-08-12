@@ -34,7 +34,7 @@ public:
 		return *this;
 	}
 
-	// + 不会改变左右操作数中的内容--->只能按照值得方式返回
+
 	// d + (-100)
 	Date operator+(int days)
 	{
