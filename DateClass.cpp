@@ -47,7 +47,7 @@ public:
 		temp._day += days;
 
 		int daysofMonth = 0;
-		// temp中的day已经大于本月的天数
+
 		while (temp._day > (daysofMonth = temp._GetDaysOfMonth(temp._year, temp._month)))
 		{
 			temp._day -= daysofMonth;
