@@ -34,7 +34,6 @@ public:
 		return *this;
 	}
 
-
 	// d + (-100)
 	Date operator+(int days)
 	{
