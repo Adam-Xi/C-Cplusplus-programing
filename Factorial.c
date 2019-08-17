@@ -1,4 +1,3 @@
-//较小数的阶乘
 #include<stdio.h>
 #include<Windows.h>
 #pragma warning (disable:4996)
