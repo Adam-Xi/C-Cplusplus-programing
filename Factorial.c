@@ -2,7 +2,7 @@
 #include<Windows.h>
 #pragma warning (disable:4996)
 
-int Recursion_Factorial(int n) //µÝ¹éÇó½×³Ë
+int Recursion_Factorial(int n) 
 {
 	if (1 == n){
 		return 1;
