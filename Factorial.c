@@ -12,7 +12,7 @@ int Recursion_Factorial(int n)
 	}
 }
 
-int Factorial(int n) //·ÇµÝ¹éÇó½×³Ë
+int Factorial(int n)
 {
 	int res = 1;
 	while (n){
