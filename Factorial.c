@@ -25,12 +25,12 @@ int Factorial(int n)
 int main()
 {
 	int num;
-	int res1 = 0;//int类型数据12后存不下
+	int res1 = 0;
 	int res2 = 0;
 /*	
-    	long res = 0;--------long型数据同样12后就存不下了，出现错误
-	long int res = 0;--------long int15以后就会出错
-	long long int res = 0;---------同样，15以后存不下
+    	long res = 0
+	long int res = 0
+	long long int res = 0
 */
 	printf("Enter a number to calculate:");
 	scanf("%d", &num);
