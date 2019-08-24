@@ -25,6 +25,7 @@ using namespace std;
 #pragma warning (disable:4996)
 #define PI atan(1.0) * 4
 
+
 int main()
 {
 	int r = 0;
