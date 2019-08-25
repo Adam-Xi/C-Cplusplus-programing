@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<Windows.h>
-//常规方法
+
 int CommonDivisor(int x, int y)
 {
 	int min = x > y ? y : x;
@@ -12,7 +12,6 @@ int CommonDivisor(int x, int y)
 	}
 	return min;
 }
-//辗转相减法
 int CommonDivisor2(int x, int y)
 {
 	while (1){
