@@ -27,6 +27,7 @@ int CommonDivisor2(int x, int y)
 	}
 	return x;
 }
+
 int CommonDivisor3(int x, int y)
 {
 	while ((x*y) != 0){
