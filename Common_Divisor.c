@@ -1,5 +1,4 @@
 #include<stdio.h>
-#include<Windows.h>
 
 int CommonDivisor(int x, int y)
 {
@@ -49,6 +48,6 @@ int main()
 {
 	int max = CommonDivisor(25, 125);
 	printf("%d\n", max);
-	system("pause");
+
 	return 0;
 }
