@@ -1,6 +1,5 @@
 #include<stdio.h>
-#include<Windows.h>
-#pragma warning (disable:4996)
+
 /*
 int count_one_bits(unsigned int value)
 {
@@ -50,6 +49,5 @@ int main()
 	count=count_one_bits(number);
 	printf("%d", count);
 	
-	system("pause");
 	return 0;
 }
