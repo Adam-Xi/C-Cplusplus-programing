@@ -38,7 +38,6 @@ char *my_strncat(char *des, const char *src, int num)
 }
 
 
-
 int main()
 {
 	char destination[20] = "hello !";
