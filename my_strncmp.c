@@ -3,7 +3,6 @@
 #include<windows.h>
 #include<assert.h>
 
-
 char *my_strcmp(const char *str1, const char *str2)
 {
 	int ret = 0;
