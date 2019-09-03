@@ -3,7 +3,7 @@
 #include<windows.h>
 #include<assert.h>
 
-int my_strlen(const char *str)  //计数器方法
+int my_strlen(const char *str)
 {
 	int count = 0;
 	while (*str){
