@@ -12,7 +12,7 @@ int my_strlen(const char *str)
 	}
 	return count;
 }
-int my_strlen2(const char *str)  //不创建临时变量计数器
+int my_strlen2(const char *str) 
 {
 	if (*str == '\0'){
 		return 0;
