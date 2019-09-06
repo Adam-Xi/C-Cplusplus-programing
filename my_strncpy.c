@@ -21,7 +21,7 @@ int my_strlen2(const char *str)
 		return my_strlen(str++) + 1;
 	}
 }
-int my_strlen3(char *str)  //指针减指针的方式
+int my_strlen3(char *str) 
 {
 	char *p = str;
 	while (*p != '\0'){
