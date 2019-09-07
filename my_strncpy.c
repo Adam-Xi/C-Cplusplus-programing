@@ -1,6 +1,5 @@
 #include<stdio.h>
 #include<string.h>
-#include<windows.h>
 #include<assert.h>
 
 int my_strlen(const char *str)
@@ -80,6 +79,5 @@ int main()
 	my_strncpy(destination, source, 7);  //¿½±´7¸ö×Ö·û
 	printf("%s\n", destination);
 
-	system("pause");
 	return 0;
 }
