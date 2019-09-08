@@ -76,7 +76,7 @@ int main()
 
 	char destination[20] = { 0 };
 	char *source = "hello world!";
-	my_strncpy(destination, source, 7);  //¿½±´7¸ö×Ö·û
+	my_strncpy(destination, source, 7);
 	printf("%s\n", destination);
 
 	return 0;
