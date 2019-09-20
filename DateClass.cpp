@@ -66,15 +66,15 @@ public:
 		Date after_days(*this);
 		int cur_days = 0;
 
-		days -= (DaysOfCurMonth(_year, _month) - _day);
-		while (days > (cur_days = DaysOfCurMonth(_year, ++_month)))
+		days -= (DaysOfCurMonth(after_days._year, after_days._month) - after_days._day);
+		while (days > (cur_days = DaysOfCurMonth(after_days._year, ++after_days._month)))
 		{
 			days %= cur_days;
-	}
-		if (_month > 12)
+		}
+		if (after_days._month > 12)
 		{
-			_year += _month / 12;
-			_month %= 12;
+			after_days._year += after_days._month / 12;
+			after_days._month %= 12;
 		}
 
 		return after_days;
@@ -84,17 +84,17 @@ public:
 		Date before_days(*this);
 		int cur_days = 0;
 
-		days -= _day;
-		while (days > (cur_days = DaysOfCurMonth(_year, --_month)))
+		days -= before_days._day;
+		while (days > (cur_days = DaysOfCurMonth(before_days._year, --before_days._month)))
 		{
 			days %= cur_days;
-			if (0 == (_month - 1))
+			if (0 == (before_days._month - 1))
 			{
-				_year--;
-				_month = 13;
+				before_days._year--;
+				before_days._month = 13;
 			}
 		}
-		_day = days;
+		before_days._day = days;
 
 		return before_days;
 	}
@@ -153,15 +153,15 @@ public:
 	Date operator++(int)  //ºóÖÃ++
 	{
 		Date before_num(*this);
-		_day++;
-		if (_day > DaysOfCurMonth(_year, _month))
+		before_num._day++;
+		if (before_num._day > DaysOfCurMonth(before_num._year, before_num._month))
 		{
-			_month++;
-			_day = 1;
-			if (_month > 12)
+			before_num._month++;
+			before_num._day = 1;
+			if (before_num._month > 12)
 			{
-				_year++;
-				_month = 1;
+				before_num._year++;
+				before_num._month = 1;
 			}
 		}
 		return before_num;
@@ -184,23 +184,23 @@ public:
 	Date operator--(int)  //ºóÖÃ--
 	{
 		Date before_num(*this);
-		_day--;
-		if (_day == 0)
+		before_num._day--;
+		if (before_num._day == 0)
 		{
-			_month--;
-			_day = DaysOfCurMonth(_year, _month);
-			if (_month == 0)
+			before_num._month--;
+			before_num._day = DaysOfCurMonth(before_num._year, before_num._month);
+			if (before_num._month == 0)
 			{
-				_year--;
-				_month = 12;
+				before_num._year--;
+				before_num._month = 12;
 			}
 		}
 		return before_num;
 	}
 	bool operator>(const Date& d)const
 	{
-		if (_year > d._year || 
-			(_year == d._year && _month > d._month) || 
+		if (_year > d._year ||
+			(_year == d._year && _month > d._month) ||
 			(_year == d._year && _month == d._month && _day > d._day))
 		{
 			return true;
@@ -209,9 +209,9 @@ public:
 	}
 	bool operator>=(const Date& d)const
 	{
-		if (_year > d._year || 
-			(_year == d._year && _month > d._month) || 
-			(_year == d._year && _month == d._month && _day > d._day) || 
+		if (_year > d._year ||
+			(_year == d._year && _month > d._month) ||
+			(_year == d._year && _month == d._month && _day > d._day) ||
 			(_year == d._year && _month == d._month && _day == d._day))
 		{
 			return true;
@@ -269,21 +269,25 @@ private:
 
 int main()
 {
-	Date today(2019, 9, 15);
-	Date yesterday(2019, 9, 14);
-	Date tomorrow(today);
-	tomorrow++;
-	if (tomorrow > today)
-	{
-		cout << " right" << endl;
-	}
-	else
-	{
-		cout << " false" << endl;
-	}
-	Date d1;
-	d1.display();
-	d1 = tomorrow++;
-	d1 = ++tomorrow;
+	//Date today(2019, 9, 15);
+	//Date yesterday(2019, 9, 14);
+	//Date tomorrow(today);
+	//tomorrow++;
+	//if (tomorrow > today)
+	//{
+	//	cout << " right" << endl;
+	//}
+	//else
+	//{
+	//	cout << " false" << endl;
+	//}
+	//Date d1;
+	//d1.display();
+	//d1 = tomorrow++;
+	//d1 = ++tomorrow;
+	Date birth(1999, 10, 20);
+	//birth = birth + 2;
+	Date today(2019, 9, 21);
+	int days = today - birth;
 	return 0;
 }
