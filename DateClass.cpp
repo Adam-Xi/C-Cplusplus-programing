@@ -1,265 +1,188 @@
-#include<iostream>
-using namespace std;
-
-
 class Date
 {
 public:
+	Date(int year = 1900, int month = 1, int day = 1)
+		: _year(year)
+		, _month(month)
+		, _day(day)
+	{
+		if (!(_year > 0 &&
+			  _month > 0 && _month < 13 &&
+			  _day > 0 && _day <= _GetDaysOfMonth(year, month)))
+		{
+			_year = 1900;
+			_month = 1;
+			_day = 1;
+		}
+	}
 
-	Date(int year = 1999, int month = 1, int day = 1)  //构造函数
+	Date(const Date& d)
+		: _year(d._year)
+		, _month(d._month)
+		, _day(d._day)
+	{}
+
+	Date& operator=(const Date& d)
 	{
-		_year = year;
-		_month = month;
-		_day = day;
-	}
-	Date(const Date& d)  //拷贝构造函数
-	{
-		_year = d._year;
-		_month = d._month;
-		_day = d._day;
-	}
-	Date& operator=(const Date& d)  //赋值运算符重载"="
-	{
-		if (this != &d)  //禁止自己给自己赋值
+		if (this != &d)
 		{
 			_year = d._year;
 			_month = d._month;
 			_day = d._day;
 		}
+
 		return *this;
 	}
 
-	bool IsInputLegitimate(int year, int month, int day)  //判断输入的合法性
+	// + 不会改变左右操作数中的内容--->只能按照值得方式返回
+	// d + (-100)
+	Date operator+(int days)
 	{
-		if (year > 0)
+		if (days < 0)
 		{
-			if (month > 0 && month < 13)
+			return *this - (0 - days);
+		}
+
+		Date temp(*this);
+		temp._day += days;
+
+		int daysofMonth = 0;
+		// temp中的day已经大于本月的天数
+		while (temp._day > (daysofMonth = temp._GetDaysOfMonth(temp._year, temp._month)))
+		{
+			temp._day -= daysofMonth;
+			temp._month++;
+			if (temp._month > 12)
 			{
-				if (day > 0 && day <= DaysOfCurMonth(year, month))
-				{
-					return true;
-				}
+				temp._year++;
+				temp._month = 1;
 			}
 		}
-		return false;
-	}
-	bool IsLeapYear(int year)  //判断是否闰年
-	{
-		if ((0 == year % 4 && 0 != year % 100) || 0 == year % 400)
-		{
-			return true;
-		}
-		return false;
-	}
-	int DaysOfCurMonth(int year, int month)  //判断当前年当前月的天数
-	{
-		int days[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-		//    月份     0   1   2   3   4   5   6   7   8   9  10  11  12
-		if (IsLeapYear(year))
-		{
-			days[2]++;
-		}
-		return days[month];
+
+		return temp;
 	}
 
-	Date operator+(int days)  //给当前日期加上days后的日期
+	Date operator-(int days)
 	{
-		Date after_days(*this);
-		int cur_days = 0;
-
-		days -= (DaysOfCurMonth(after_days._year, after_days._month) - after_days._day);
-		while (days > (cur_days = DaysOfCurMonth(after_days._year, ++after_days._month)))
+		if (days < 0)
 		{
-			days %= cur_days;
-		}
-		if (after_days._month > 12)
-		{
-			after_days._year += after_days._month / 12;
-			after_days._month %= 12;
+			return *this + (0 - days);
 		}
 
-		return after_days;
-	}
-	Date operator-(int days)  //给当前日期减去days后的日期
-	{
-		Date before_days(*this);
-		int cur_days = 0;
+		Date temp(*this);
+		temp._day -= days;
 
-		days -= before_days._day;
-		while (days > (cur_days = DaysOfCurMonth(before_days._year, --before_days._month)))
+		while (temp._day <= 0)
 		{
-			days %= cur_days;
-			if (0 == (before_days._month - 1))
+			temp._month--;
+			if (temp._month < 0)
 			{
-				before_days._year--;
-				before_days._month = 13;
+				temp._year -= 1;
+				temp._month = 12;
 			}
-		}
-		before_days._day = days;
 
-		return before_days;
+			temp._day += temp._GetDaysOfMonth(temp._year, temp._month);
+		}
+
+		return temp;
 	}
-	int operator-(const Date& d)  //两个日期相减得出的天数
+
+	// min   max
+	int operator-(const Date& d)
 	{
-		int total_days = 0;
-		if (operator<(d))
+		Date minDate(*this);
+		Date maxDate(d);
+		if (*this > d)
 		{
-			total_days += (DaysOfCurMonth(_year, _month) - _day) + d._day;
+			swap(minDate, maxDate);
+		}
 
-			while (_year < d._year || _month < d._month)
-			{
-				if ((_month + 1) > 12)
-				{
-					_year++;
-					_month = 0;
-				}
-				total_days += DaysOfCurMonth(_year, ++_month);
-			}
-		}
-		else if (operator>(d))
+		size_t count = 0;
+		while (minDate != maxDate)
 		{
-			total_days += (DaysOfCurMonth(d._year, d._month) - d._day) + _day;
+			count++;
+			minDate++;
+		}
 
-			while (_year > d._year || _month > d._month)
-			{
-				if ((_month - 1) == 0)
-				{
-					_year--;
-					_month = 13;
-				}
-				total_days += DaysOfCurMonth(_year, --_month);
-			}
-		}
-		else
-		{
-			return 0;
-		}
-		return total_days;
+		return count;
 	}
-	Date& operator++()  //前置++
+
+	Date& operator++()
 	{
-		_day++;
-		if (_day > DaysOfCurMonth(_year, _month))
-		{
-			_month++;
-			_day = 1;
-			if (_month > 12)
-			{
-				_year++;
-				_month = 1;
-			}
-		}
+		*this = *this + 1;
 		return *this;
 	}
-	Date operator++(int)  //后置++
+
+	Date operator++(int)
 	{
-		Date before_num(*this);
-		before_num._day++;
-		if (before_num._day > DaysOfCurMonth(before_num._year, before_num._month))
-		{
-			before_num._month++;
-			before_num._day = 1;
-			if (before_num._month > 12)
-			{
-				before_num._year++;
-				before_num._month = 1;
-			}
-		}
-		return before_num;
+		Date temp(*this);
+		*this = *this + 1;
+		return temp;
 	}
-	Date& operator--()  //前置--
+
+	Date& operator--()
 	{
-		_day--;
-		if (_day == 0)
-		{
-			_month--;
-			_day = DaysOfCurMonth(_year, _month);
-			if (_month == 0)
-			{
-				_year--;
-				_month = 12;
-			}
-		}
+		*this = *this - 1;
 		return *this;
 	}
-	Date operator--(int)  //后置--
+
+	Date operator--(int)
 	{
-		Date before_num(*this);
-		before_num._day--;
-		if (before_num._day == 0)
-		{
-			before_num._month--;
-			before_num._day = DaysOfCurMonth(before_num._year, before_num._month);
-			if (before_num._month == 0)
-			{
-				before_num._year--;
-				before_num._month = 12;
-			}
-		}
-		return before_num;
+		Date temp(*this);
+		*this = *this - 1;
+		return temp;
 	}
+
 	bool operator>(const Date& d)const
 	{
 		if (_year > d._year ||
-			(_year == d._year && _month > d._month) ||
-			(_year == d._year && _month == d._month && _day > d._day))
+			_year == d._year && _month > d._month ||
+			_year == d._year && _month == d._month && _day > d._day)
 		{
 			return true;
 		}
-		return false;
-	}
-	bool operator>=(const Date& d)const
-	{
-		if (_year > d._year ||
-			(_year == d._year && _month > d._month) ||
-			(_year == d._year && _month == d._month && _day > d._day) ||
-			(_year == d._year && _month == d._month && _day == d._day))
-		{
-			return true;
-		}
-		return false;
-	}
-	bool operator<(const Date& d)const
-	{
-		if (_year < d._year ||
-			(_year == d._year && _month < d._month) ||
-			(_year == d._year && _month == d._month && _day < d._day))
-		{
-			return true;
-		}
-		return false;
-	}
-	bool operator<=(const Date& d)const
-	{
-		if (_year < d._year ||
-			(_year == d._year && _month < d._month) ||
-			(_year == d._year && _month == d._month && _day < d._day) ||
-			(_year == d._year && _month == d._month && _day == d._day))
-		{
-			return true;
-		}
-		return false;
-	}
-	bool operator==(const Date& d)const
-	{
-		if (_year == d._year && _month == d._month && _day == d._day)
-		{
-			return true;
-		}
-		return false;
-	}
-	bool operator!=(const Date& d)const
-	{
-		if (!operator==(d))
-		{
-			return true;
-		}
+
 		return false;
 	}
 
-	void display()
+	bool operator==(const Date& d)const 
 	{
-		cout << _year << "-" << _month << "-" << _day << endl;
+		return _year == d._year &&
+			   _month == d._month &&
+			   _day == d._day;
+	}
+
+	bool operator!=(const Date& d)const
+	{
+		return !(*this == d);
+	}
+
+	friend ostream& operator<<(ostream& _cout, const Date& d)
+	{
+		_cout << d._year << "-" << d._month << "-" << d._day;
+		return _cout;
+	}
+private:
+	int _GetDaysOfMonth(int year, int month)
+	{
+		int days[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+		if (month == 2 && IsLeapYear(year))
+		{
+			days[2] += 1;
+		}
+
+		return days[month];
+	}
+
+	bool IsLeapYear(int year)
+	{
+		if ((0 == year % 4 && 0 != year % 100) ||
+			(0 == year % 400))
+		{
+			return true;
+		}
+
+		return false;
 	}
 
 private:
@@ -268,27 +191,14 @@ private:
 	int _day;
 };
 
+
 int main()
 {
-	//Date today(2019, 9, 15);
-	//Date yesterday(2019, 9, 14);
-	//Date tomorrow(today);
-	//tomorrow++;
-	//if (tomorrow > today)
-	//{
-	//	cout << " right" << endl;
-	//}
-	//else
-	//{
-	//	cout << " false" << endl;
-	//}
-	//Date d1;
-	//d1.display();
-	//d1 = tomorrow++;
-	//d1 = ++tomorrow;
-	Date birth(1999, 10, 20);
-	//birth = birth + 2;
-	Date today(2019, 9, 21);
-	int days = today - birth;
+	Date d1(2019, 9, 18);
+	Date d2(2020, 1, 1);
+	cout << d2 - d1 << endl;
+
+	d1 = d1 - 999;
+	cout << d1 << endl;
 	return 0;
 }
