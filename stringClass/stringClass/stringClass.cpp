@@ -5,6 +5,8 @@ using namespace std;
 class String
 {
 public:
+	typedef char* iterator;
+public:
 	String(const char* str = "") //构造函数
 	{
 		_size = strlen(str);
@@ -41,6 +43,38 @@ public:
 		this->Swap(str);
 		return *this;
 	}
+	iterator begin()  //迭代器
+	{
+		return _str;
+	}
+	iterator end()  
+	{
+		return _str + _size;
+	}
+	String& operator+=(char c)
+	{
+		if (_size == _capacity)
+		{
+			Reserve(_capacity * 2);
+		}
+		_str[_size++] = c;
+		_str[_size] = '\0';
+	}
+	String& Reserve(size_t newCapacity)
+	{
+		if (newCapacity > _capacity)
+		{
+			char* str = new char[newCapacity + 1];
+			strcpy(str, _str);
+
+			delete[] _str;
+			_str = str;
+			_capacity = newCapacity;
+		}
+	}
+
+
+
 
 private:
 	char* _str;
