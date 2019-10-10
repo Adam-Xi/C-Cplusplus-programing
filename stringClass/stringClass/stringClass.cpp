@@ -1,6 +1,8 @@
+#pragma warning(disable:4996)
 #include<iostream>
 using namespace std;
 #include<assert.h>
+#include<string.h>
 
 class String
 {
@@ -77,7 +79,7 @@ public:
 	void Clear()  //清空
 	{
 		_size = 0;
-		_str[size] = '\0';
+		_str[_size] = '\0';
 	}
 	void Swap(String& str)  //交换对象中的资源
 	{
@@ -107,7 +109,7 @@ public:
 		{
 			if (newSize > _capacity)
 			{
-				Reverse(newSize);
+				Reserve(newSize);
 			}
 			memset(_str + _size, c, newSize - _size);
 		}
@@ -116,66 +118,157 @@ public:
 	}
 	char& operator[](size_t index)
 	{
-
+		assert(index < _size);
+		return _str[_size];
 	}
 	const char& operator[](size_t index)const
 	{
-
+		assert(index < _size);
+		return _str[_size];
 	}
 	
 	bool operator<(const String& s)
 	{
-
+		if (strcmp(_str, s._str) < 0)
+		{
+			return true;
+		}
+		return false;
 	}
 	bool operator<=(const String& s)
 	{
-
+		if (strcmp(_str, s._str) <= 0)
+		{
+			return true;
+		}
+		return false;
 	}
 	bool operator>(const String& s)
 	{
-
+		if (strcmp(_str, s._str) > 0)
+		{
+			return true;
+		}
+		return false;
 	}
 	bool operator>=(const String& s)
 	{
-
+		if (strcmp(_str, s._str) >= 0)
+		{
+			return true;
+		}
+		return false;
 	}
 	bool operator==(const String& s)
 	{
-		
+		if (strcmp(_str, s._str) == 0)
+		{
+			return true;
+		}
+		return false;
 	}
 	bool operator!=(const String& s)
 	{
-
+		if (!(*this == s))
+		{
+			return true;
+		}
+		return false;
 	}
 
-	size_t Find(char c, size_t pos = 0)const
+	size_t Find(char c, size_t pos = 0)const //返回c在string中第一次出现的位置
 	{
-
+		for (size_t i = pos; i < _size; ++i)
+		{
+			if (_str[i] == c)
+			{
+				return i;
+			}
+		}
+		return -1;
 	}
-	size_t Find(const char* s, size_t pos = 0)const
+	size_t Find(const char* s, size_t pos = 0)const //返回子串s在string中第一次出现的位置
 	{
-
+		/*
+		assert(s != nullptr);
+		char* str = strstr(_str, s);
+		if (str != nullptr)
+		{
+			return str - s;
+		}
+		*/
+		size_t len = strlen(s);
+		int flag = 1;
+		for (size_t i = pos; i < _size - len; ++i)
+		{
+			i = this->Find(s[i], i);
+			for (size_t j = 0; j <= len; ++j)
+			{
+				if (_str[i + j] != s[j])
+				{
+					flag = 0;
+					break;
+				}
+			}
+			if (flag == 1)
+			{
+				return i;
+			}
+			flag = 1;
+		}
+		return -1;
 	}
-	String& Insert(size_t pos, char c)
+	String& Insert(size_t pos, char c) //在pos位插入字符c，并返回该字符的位置
 	{
+		if (_size == _capacity)
+		{
+			Reserve(_capacity * 2);
+		}
+		for (size_t i = _size + 1; i > pos; --i) //从结束符'\0'位置开始后移一个位置
+		{
+			_str[i] = _str[i - 1];
+		}
+		_str[pos] = c;
 
+		return *this;
 	}
-	String& Insert(size_t pos, const char* str)
+	String& Insert(size_t pos, const char* str) //在pos位插入字符串str，并返回该子串的首元素位置
 	{
-
+		size_t len = strlen(str);
+		if (_size + len > _capacity)
+		{
+			Reserve(_size + len);
+		}
+		for (size_t i = _size + len; i > pos; --i) //从结束符'\0'位置开始后移len位置
+		{
+			_str[i] = _str[i - len];
+		}
+		for (size_t i = pos, j = 0; i <= len; ++i, ++j)
+		{
+			_str[i] = str[j];
+		}
+		return *this;
 	}
-	String& Erase(size_t pos, size_t len)
+	String& Erase(size_t pos, size_t len) //删除pos位置的元素
 	{
-
+		for (size_t i = pos; i < _size; ++i)
+		{
+			_str[i] = _str[i + 1];
+		}
+		_size--;
+		return *this;
 	}
-
-
 
 private:
 	char* _str;
 	size_t _capacity;
 	size_t _size;
 };
+
+void TestString()
+{
+
+}
 
 int main()
 {
