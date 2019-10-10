@@ -21,17 +21,22 @@ public:
 		, _capacity(0)
 		, _size(0)
 	{
-		String tmp(str);
+		String tmp(str._str);
 		this->Swap(tmp);
 	}
+	//string(const string& s)
+	//	: _size(s._size)
+	//	, _capacity(s._size)
+	//{
+	//	_str = new char[_capacity + 1];
+	//	strcpy(_str, s._str);
+	//}
 	~String()  //析构函数
 	{
 		if (_str)
 		{
 			delete[] _str;
 			_str = nullptr;
-			_capacity = 0;
-			_size = 0;
 		}
 	}
 	String& operator=(String str)  //赋值运算符重载 
@@ -102,6 +107,7 @@ public:
 			_str = str;
 			_capacity = newCapacity;
 		}
+		return *this;
 	}
 	String& Resize(size_t newSize, char c = '\0')
 	{
@@ -115,6 +121,7 @@ public:
 		}
 		_size = newSize;
 		_str[newSize] = '\0';
+		return *this;
 	}
 	char& operator[](size_t index)
 	{
@@ -267,11 +274,23 @@ private:
 
 void TestString()
 {
+	String s1;
+	String s2("helloWorld");
+	String s3(s2);
+	String s4("school");
+	s1 = s4;
+	s2.PushBack('!');
+	s3 += '!';
+	s3 += " great!";
+	s4.Append(" great");
+	s1.Clear();
+
+	
 
 }
 
 int main()
 {
-
+	TestString();
 	return 0;
 }
