@@ -204,12 +204,12 @@ public:
 			return str - s;
 		}
 		*/
+
 		size_t len = strlen(s);
 		int flag = 1;
-		for (size_t i = pos; i < _size - len; ++i)
+		for (size_t i = pos; i < _size; ++i)
 		{
-			i = this->Find(s[i], i);
-			for (size_t j = 0; j <= len; ++j)
+			for (size_t j = 0; j < len; ++j)
 			{
 				if (_str[i + j] != s[j])
 				{
@@ -225,21 +225,21 @@ public:
 		}
 		return -1;
 	}
-	String& Insert(size_t pos, char c) //在pos位插入字符c，并返回该字符的位置
+	String& Insert(size_t pos, char c) //在pos位插入字符c
 	{
 		if (_size == _capacity)
 		{
 			Reserve(_capacity * 2);
 		}
-		for (size_t i = _size + 1; i > pos; --i) //从结束符'\0'位置开始后移一个位置
+		for (size_t i = _size; i > pos; --i) //从结束符'\0'位置开始后移一个位置
 		{
 			_str[i] = _str[i - 1];
 		}
 		_str[pos] = c;
-
+		_str[++_size] = '\0';
 		return *this;
 	}
-	String& Insert(size_t pos, const char* str) //在pos位插入字符串str，并返回该子串的首元素位置
+	String& Insert(size_t pos, const char* str) //在pos位插入字符串str
 	{
 		size_t len = strlen(str);
 		if (_size + len > _capacity)
@@ -272,7 +272,7 @@ private:
 	size_t _size;
 };
 
-void TestString()
+void TestString1()
 {
 	String s1;
 	String s2("helloWorld");
@@ -284,13 +284,26 @@ void TestString()
 	s3 += " great!";
 	s4.Append(" great");
 	s1.Clear();
-
-	
-
 }
-
+void TestString2()
+{
+	String s1("abcdefabdmn");
+	size_t res = s1.Find('a');
+	res = s1.Find('a', 3);
+	res = s1.Find("abd");
+	res = s1.Find("mn");
+}
+void TestString3()
+{
+	String s1("abcdefabdmn");
+	s1.Insert(1, 'a');
+	s1.Insert(3, 'a');
+	s1.Insert(1, "abcd");
+}
 int main()
 {
-	TestString();
+	//TestString1();
+	//TestString2();
+	TestString3();
 	return 0;
 }

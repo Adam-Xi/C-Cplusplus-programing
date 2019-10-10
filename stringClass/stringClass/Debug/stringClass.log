@@ -1,4 +1,4 @@
-﻿生成启动时间为 2019/10/10 18:24:15。
+﻿生成启动时间为 2019/10/11 0:02:54。
      1>项目“C:\Users\18209\Desktop\C-Cplusplus-programing\stringClass\stringClass\stringClass.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
          D:\VS2013\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt stringClass.cpp
@@ -10,4 +10,4 @@
 
 生成成功。
 
-已用时间 00:00:01.07
+已用时间 00:00:01.20
