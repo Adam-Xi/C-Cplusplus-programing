@@ -31,7 +31,7 @@ public:
 		_endOfStorage = _finish;
 	}
 
-	Vector(const Vector& v)  //拷贝构造
+	Vector(const Vector<T>& v)  //拷贝构造
 		:_start(nullptr)
 		, _finish(nullptr)
 		, _endOfStorage(nullptr)
@@ -100,12 +100,12 @@ public:
 
 	////////////////////////////////////////////////////////////
 	//空间增长操作
-	size_t Size()
+	size_t Size()const
 	{
 		return _finish - _start;
 	}
 
-	size_t Capacity()
+	size_t Capacity()const
 	{
 		return _endOfStorage - _start;
 	}
@@ -171,6 +171,12 @@ public:
 
 	////////////////////////////////////////////////////////////
 	//增删查改
+	Vector<T>& operator=(vector<T> v)
+	{
+		Swap(v);
+		return *this;
+	}
+
 	void Push_Back(const T& c)  //尾插一个元素c
 	{
 		Insert(end(), c);
@@ -179,22 +185,6 @@ public:
 	void Pop_Back()  //删掉最后一个元素
 	{
 		Earse(--end());
-	}
-
-	iterator Earse(iterator pos)  //删除pos位置的元素，返回删除位置
-	{
-		//判断删除位置的合法性
-		assert(pos >= begin() && pos < end());
-
-		iterator it = pos;
-		while (it != end() - 1)
-		{
-			*it = *(it + 1);
-			++it;
-		}
-		--_finish;
-
-		return pos;
 	}
 
 	iterator Insert(iterator pos, const T& c)  //插入一个元素，并返回其插入位置的地址
@@ -225,6 +215,37 @@ public:
 		return pos;
 	}
 
+	iterator Earse(iterator pos)  //删除pos位置的元素，返回删除位置
+	{
+		//判断删除位置的合法性
+		assert(pos >= begin() && pos < end());
+
+		iterator it = pos;
+		while (it != end() - 1)
+		{
+			*it = *(it + 1);
+			++it;
+		}
+		--_finish;
+
+		return pos;
+	}
+
+	void Swap(Vector<T>& v)
+	{
+		swap(_start, v._start);
+		swap(_finish, v._finish);
+		swap(_endOfStorage, v._endOfStorage);
+	}
+
+	T& operator[](size_t pos)
+	{
+		return _start[pos];
+	}
+	const T& operator[](size_t pos)const
+	{
+		return _start[pos];
+	}
 	////////////////////////////////////////////////////////////
 	//
 private:
