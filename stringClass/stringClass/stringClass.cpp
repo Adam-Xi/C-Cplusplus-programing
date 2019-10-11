@@ -242,15 +242,16 @@ public:
 	String& Insert(size_t pos, const char* str) //在pos位插入字符串str
 	{
 		size_t len = strlen(str);
-		if (_size + len > _capacity)
+		if (_size + len > _capacity) //看是否需要扩容
 		{
 			Reserve(_size + len);
+			_size = _size + len;
 		}
-		for (size_t i = _size + len; i > pos; --i) //从结束符'\0'位置开始后移len位置
+		for (size_t i = _size; i >= pos + len; --i) //从结束符'\0'位置(_str[_size]位置)开始后移len位置
 		{
 			_str[i] = _str[i - len];
 		}
-		for (size_t i = pos, j = 0; i <= len; ++i, ++j)
+		for (size_t i = pos, j = 0; j < len; ++i, ++j)
 		{
 			_str[i] = str[j];
 		}
@@ -299,6 +300,7 @@ void TestString3()
 	s1.Insert(1, 'a');
 	s1.Insert(3, 'a');
 	s1.Insert(1, "abcd");
+	s1.Insert(3, "xzy");
 }
 int main()
 {
