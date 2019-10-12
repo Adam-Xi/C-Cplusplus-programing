@@ -1,16 +1,21 @@
-﻿生成启动时间为 2019/10/12 13:45:01。
+﻿生成启动时间为 2019/10/12 23:41:56。
      1>项目“C:\Users\18209\Desktop\C-Cplusplus-programing\Vector\Vector\Vector.vcxproj”在节点 2 上(Rebuild 个目标)。
      1>ClCompile:
          D:\VS2013\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt vectorClass.cpp
          vectorClass.cpp
-     1>c:\users\18209\desktop\c-cplusplus-programing\vector\vector\vectorclass.cpp(46): error C2662: “const int *Vector<int>::const_end(void)”: 不能将“this”指针从“const Vector<int>”转换为“Vector<int> &”
-                 转换丢失限定符
-                 c:\users\18209\desktop\c-cplusplus-programing\vector\vector\vectorclass.cpp(35): 编译类 模板 成员函数“Vector<int>::Vector(const Vector<int> &)”时
-                 c:\users\18209\desktop\c-cplusplus-programing\vector\vector\vectorclass.cpp(263): 参见对正在编译的函数 模板 实例化“Vector<int>::Vector(const Vector<int> &)”的引用
-                 c:\users\18209\desktop\c-cplusplus-programing\vector\vector\vectorclass.cpp(260): 参见对正在编译的类 模板 实例化“Vector<int>”的引用
-     1>c:\users\18209\desktop\c-cplusplus-programing\vector\vector\vectorclass.cpp(46): fatal error C1903: 无法从以前的错误中恢复；正在停止编译
+     1>c:\users\18209\desktop\c-cplusplus-programing\vector\vector\vectorclass.cpp(64): error C2100: 非法的间接寻址
+                 c:\users\18209\desktop\c-cplusplus-programing\vector\vector\vectorclass.cpp(261): 参见对正在编译的函数 模板 实例化“Vector<int>::Vector<int>(InputIterator,InputIterator)”的引用
+                 with
+                 [
+                     InputIterator=int
+                 ]
+                 c:\users\18209\desktop\c-cplusplus-programing\vector\vector\vectorclass.cpp(261): 参见对正在编译的函数 模板 实例化“Vector<int>::Vector<int>(InputIterator,InputIterator)”的引用
+                 with
+                 [
+                     InputIterator=int
+                 ]
      1>已完成生成项目“C:\Users\18209\Desktop\C-Cplusplus-programing\Vector\Vector\Vector.vcxproj”(Rebuild 个目标)的操作 - 失败。
 
 生成失败。
 
-已用时间 00:00:00.38
+已用时间 00:00:00.43

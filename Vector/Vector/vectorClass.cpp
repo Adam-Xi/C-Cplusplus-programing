@@ -43,7 +43,7 @@ public:
 		//拷贝元素
 		iterator it = begin();
 		const_iterator const_it = const_begin();
-		while (const_it != v.const_end())
+		while (const_it != const_end())
 		{
 			*it++ = *const_it++;
 		}
@@ -149,7 +149,7 @@ public:
 			//-----1、开辟新空间
 			T* temp = new T[newCapacity];
 			//-----2、资源拷贝
-			size_t n = size();
+			size_t n = Size();
 			if (_start) //如果_start指向的空间存在时
 			{
 				for (size_t i = 0; i < n; ++i)
@@ -196,8 +196,8 @@ public:
 		//判断是否需要扩容
 		if (_finish == _endOfStorage)
 		{
-			size_t size = size();
-			size_t newCapacity = (0 == capacity()) ? 1 : capacity() * 2;
+			size_t size = Size();
+			size_t newCapacity = (0 == Capacity()) ? 1 : Capacity() * 2;
 			//由于扩容引起的空间地址发生变化，导致需要重置pos
 			pos = _start + size;
 		}
@@ -205,8 +205,8 @@ public:
 		iterator it = end();
 		while (it >= pos)
 		{
-			--it;
 			*it = *(it - 1);
+			--it;
 		}
 		//pos位插入c
 		*pos = c;
