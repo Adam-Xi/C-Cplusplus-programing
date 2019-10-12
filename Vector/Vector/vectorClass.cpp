@@ -1,5 +1,6 @@
 #include<iostream>
 using namespace std;
+#include<assert.h>
 
 //vector的底层结构为可存放任意类型的动态顺序表
 //由于可存放任意类型，所以用模板来进行模拟实现
@@ -171,7 +172,7 @@ public:
 
 	////////////////////////////////////////////////////////////
 	//增删查改
-	Vector<T>& operator=(vector<T> v)
+	Vector<T>& operator=(Vector<T> v)
 	{
 		Swap(v);
 		return *this;
@@ -254,8 +255,16 @@ private:
 	iterator _endOfStorage;  //指向该空间中的末尾(最后一个位置)
 };
 
+void TestVector1()
+{
+	Vector<int> v1;
+	Vector<int> v2(5, 100);
+	Vector<int> v3(v2.begin() + 1, v2.end());
+	Vector<int> v4(v3);
+}
 
 int main()
 {
+	TestVector1();
 	return 0;
 }
