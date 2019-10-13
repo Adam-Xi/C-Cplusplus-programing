@@ -1,6 +1,7 @@
 #include<iostream>
 using namespace std;
 #include<assert.h>
+#include<string>
 
 //vector的底层结构为可存放任意类型的动态顺序表
 //由于可存放任意类型，所以用模板来进行模拟实现
@@ -21,10 +22,10 @@ public:
 		, _endOfStorage(nullptr)
 	{}
 
-	Vector(size_t n, const T& val = T())  //带参构造函数：用n个val填充
+	Vector(int n, const T& val = T())  //带参构造函数：用n个val填充
 		:_start(new T[n])
 	{
-		for (size_t i = 0; i < n; ++i)
+		for (int i = 0; i < n; ++i)
 		{
 			_start[i] = val;
 		}
@@ -42,8 +43,8 @@ public:
 
 		//拷贝元素
 		iterator it = begin();
-		const_iterator const_it = const_begin();
-		while (const_it != const_end())
+		const_iterator const_it = v.const_begin();
+		while (const_it != v.const_end())
 		{
 			*it++ = *const_it++;
 		}
@@ -83,18 +84,17 @@ public:
 	{
 		return _start;
 	}
-
 	iterator end()
 	{
 		return _finish;
 	}
 
-	const_iterator const_begin()
+	//反向迭代器
+	const_iterator const_begin()const
 	{
 		return _start;
 	}
-
-	const_iterator const_end()
+	const_iterator const_end()const
 	{
 		return _finish;
 	}
@@ -185,25 +185,26 @@ public:
 
 	void Pop_Back()  //删掉最后一个元素
 	{
-		Earse(--end());
+		--_finish;
 	}
 
 	iterator Insert(iterator pos, const T& c)  //插入一个元素，并返回其插入位置的地址
 	{
 		//断言，看插入的位置是否合法
-		assert(pos >= begin() && pos < end());
+		assert(pos >= begin() && pos <= end());
 
 		//判断是否需要扩容
 		if (_finish == _endOfStorage)
 		{
 			size_t size = Size();
 			size_t newCapacity = (0 == Capacity()) ? 1 : Capacity() * 2;
+			Reserve(newCapacity);
 			//由于扩容引起的空间地址发生变化，导致需要重置pos
 			pos = _start + size;
 		}
 		//将pos位及以后的元素全部向后移动一位
 		iterator it = end();
-		while (it >= pos)
+		while (it > pos)
 		{
 			*it = *(it - 1);
 			--it;
@@ -241,10 +242,12 @@ public:
 
 	T& operator[](size_t pos)
 	{
+		assert(pos < Size());
 		return _start[pos];
 	}
 	const T& operator[](size_t pos)const
 	{
+		assert(pos < Size());
 		return _start[pos];
 	}
 	////////////////////////////////////////////////////////////
@@ -262,9 +265,42 @@ void TestVector1()
 	Vector<int> v3(v2.begin() + 1, v2.end());
 	Vector<int> v4(v3);
 }
+void TestVector2()
+{
+	Vector<char> v;
+	cout << v.Size() << endl;
+	cout << v.Capacity() << endl;
+
+	v.Push_Back('a');
+	v.Push_Back('b');
+	v.Push_Back('c');
+	v.Push_Back('d');
+	cout << v.Size() << endl;
+	cout << v.Capacity() << endl;
+
+	v.Pop_Back();
+	v.Pop_Back();
+	cout << v.Size() << endl;
+	cout << v.Capacity() << endl;
+}
+void  TestVector3()
+{
+	Vector<string> v;
+	v.Push_Back("1111");
+	v.Push_Back("22222");
+	v.Push_Back("333333");
+	v.Push_Back("000");
+
+	for (size_t i = 0; i < v.Size(); i++)
+	{
+		cout << v[i] << endl;
+	}
+}
 
 int main()
 {
-	TestVector1();
+	// TestVector1();
+	// TestVector2();
+	TestVector3();
 	return 0;
 }
