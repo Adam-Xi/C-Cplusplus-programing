@@ -155,8 +155,8 @@ public:
 			pCur = pCur->_pNext;
 		}
 	}
-	template<class iterator>
-	List(iterator first, iterator last)
+	template<class Iterator>
+	List(Iterator first, Iterator last)
 	{
 		CreatHead();
 		while (first != last)
